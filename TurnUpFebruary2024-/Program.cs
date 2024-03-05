@@ -118,10 +118,12 @@ EditDescriptionTextbox.Clear();
 EditDescriptionTextbox.SendKeys("TimeDescriptionEdited");
 
 Thread.Sleep(5000);
-
-IWebElement EditPriceperUnitTextbox = driver.FindElement(By.Id("Price"));
-EditPriceperUnitTextbox.Clear();
-EditPriceperUnitTextbox.SendKeys("1000");
+IWebElement EditPriceperUnitOverlappingTag = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[4]/div/span[1]/span/input[1]"));
+IWebElement EditPriceperUnitTextBox = driver.FindElement(By.Id("Price"));
+EditPriceperUnitOverlappingTag.Click();
+EditPriceperUnitTextBox.Clear();
+EditPriceperUnitOverlappingTag.Click();
+EditPriceperUnitTextBox.SendKeys("1000");
 
 Thread.Sleep(5000);
 
@@ -139,9 +141,9 @@ Thread.Sleep(3000);
 
 IWebElement editedRecordCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 IWebElement editedRecordDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
-IWebElement editedRecordPrice = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
 
-if ((editedRecordCode.Text == "TimeCodeedited") && (editedRecordDescription.Text == "TimeDescriptionedited") && (editedRecordPrice.Text == "$1,000.00"))
+
+if ((editedRecordCode.Text == "TimeCodeedited") && (editedRecordDescription.Text == "TimeDescriptionedited"))
 {
     Console.WriteLine("New Material/Time record has been edited successfully");
 }

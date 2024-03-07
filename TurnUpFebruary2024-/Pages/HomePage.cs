@@ -1,10 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TurnUpFebruary2024_.Utilities;
 
 namespace TurnUpFebruary2024_.Pages
@@ -13,19 +9,55 @@ namespace TurnUpFebruary2024_.Pages
     {
         public void NavigateToTMPage(IWebDriver driver)
         {
-            //Navigate to Time and Material module (click on Administration dropdown menu button)//
-            IWebElement AdministrationDropdown = driver.FindElement(By.XPath("//*[contains(text(),'Administration')]"));
-            AdministrationDropdown.Click();
+            try
+            {
 
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[contains(text(),'Time & Materials')]")));
+                //Navigate to Time and Material module (click on Administration dropdown menu button)//
+                IWebElement AdministrationDropdown = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
+                AdministrationDropdown.Click();
 
-            WaitUtils.WaitToBeVisible(driver, "XPath", "//*[contains(text(),'Time & Materials')]", 3);
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a")));
 
-            IWebElement TimeAndMaterialOption = driver.FindElement(By.XPath("//*[contains(text(),'Time & Materials')]"));
-            TimeAndMaterialOption.Click();
-            
+                WaitUtils.WaitToBeVisible(driver, "XPath", "/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a", 3);
+
+                IWebElement TimeAndMaterialOption = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[3]/a"));
+                TimeAndMaterialOption.Click();
+
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("TurnUp portal dashboard tab is not clickable");
+            }
+
         }
+
+        public void NavigateToEmployeePage(IWebDriver driver)
+        {
+            try
+            {
+
+                //Navigate to Employee module (click on Administration dropdown menu button)//
+                IWebElement AdministrationDropdown = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
+                AdministrationDropdown.Click();
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                //wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[2]/a")));
+
+                WaitUtils.WaitToBeVisible(driver, "XPath", "/html/body/div[3]/div/div/ul/li[5]/ul/li[2]/a", 3);
+
+                IWebElement EmployeeOption = driver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/ul/li[2]/a"));
+                EmployeeOption.Click();
+
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail("TurnUp portal dashboard tab is not clickable");
+            }
+
+        }
+
+
 
         public void VerifyLoggedInUser(IWebDriver driver)
         {

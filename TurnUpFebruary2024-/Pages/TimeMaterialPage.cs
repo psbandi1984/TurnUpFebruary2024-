@@ -1,16 +1,12 @@
-﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using TurnUpFebruary2024_.Utilities;
 
 namespace TurnUpFebruary2024_.Pages
 {
     public class TimeMaterialPage
     {
-        public void CreateTimeMaterialRecord(IWebDriver driver) 
+        public void CreateTimeMaterialRecord(IWebDriver driver)
         {
 
             //Create a new Time record in Time and Material module//
@@ -59,25 +55,28 @@ namespace TurnUpFebruary2024_.Pages
             IWebElement newRecordDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
             IWebElement newRecordPrice = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
 
-            if (newRecordCode.Text == "TimeCode" && newRecordTypeCode.Text == "T" && newRecordDescription.Text == "TimeDescription" && newRecordPrice.Text == "$20,000.00")
-            {
-                Console.WriteLine("New Material/Time record has been created successfully");
-            }
-            else
-            {
-                Console.WriteLine("New Material/Time record has not been created successfully :(:( ");
+            ///* if (newRecordCode.Text == "TimeCode" && newRecordTypeCode.Text == "T" && newRecordDescription.Text == "TimeDescription" && newRecordPrice.Text == "$20,000.00")
+            // {
+            //     Console.WriteLine("New Material/Time record has been created successfully");
+            // }
+            // else
+            // {
+            //     Console.WriteLine("New Material/Time record has not been created successfully :(:( ");
 
-            }
+            // }*/
+
+            Assert.That((newRecordCode.Text == "TimeCode" && newRecordTypeCode.Text == "T" && newRecordDescription.Text == "TimeDescription" && newRecordPrice.Text == "$20,000.00"), "New Material/Time record has not been created successfully");
 
         }
-        public void EditTimeMaterialRecord(IWebDriver driver) 
+        public void EditTimeMaterialRecord(IWebDriver driver)
         {
             //Edit a new Time record in Time and Material module//
 
-            IWebElement newgotoLastpageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+
+            IWebElement newgotoLastpageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]"));
             newgotoLastpageButton.Click();
 
-            Thread.Sleep(2000);
+            Thread.Sleep(3000);
 
             //Click on Edit button of a new time record in the last page//
             IWebElement EditButton = driver.FindElement(By.XPath("//tr[last()]/td[5]/a[1]"));
@@ -95,6 +94,7 @@ namespace TurnUpFebruary2024_.Pages
             EditDescriptionTextbox.SendKeys("TimeDescriptionEdited");
 
             Thread.Sleep(5000);
+            WaitUtils.WaitToBeVisible(driver, "XPath", "//*[@id='TimeMaterialEditForm']/div/div[4]/div/span[1]/span/input[1]", 3);
             IWebElement EditPriceperUnitOverlappingTag = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[4]/div/span[1]/span/input[1]"));
             IWebElement EditPriceperUnitTextBox = driver.FindElement(By.Id("Price"));
             EditPriceperUnitOverlappingTag.Click();
@@ -113,6 +113,8 @@ namespace TurnUpFebruary2024_.Pages
             Thread.Sleep(3000);
 
             //check if a new record has been edited successfully//
+
+            WaitUtils.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[4]/a[4]/span", 3);
             IWebElement editedgotoLastpageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
             editedgotoLastpageButton.Click();
 
@@ -120,20 +122,10 @@ namespace TurnUpFebruary2024_.Pages
 
             IWebElement editedRecordCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             IWebElement editedRecordDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
-
-
-            if (editedRecordCode.Text == "TimeCodeedited" && editedRecordDescription.Text == "TimeDescriptionedited")
-            {
-                Console.WriteLine("New Material/Time record has been edited successfully");
-            }
-            else
-            {
-                Console.WriteLine("New Material/Time record has not been edited successfully :(:( ");
-
-            }
+            Assert.That((editedRecordCode.Text == "TimeCodeedited" && editedRecordDescription.Text == "TimeDescriptionedited"), "New Material/Time record has not been edited successfully");
 
         }
-        public void DeleteTimeMaterialRecord(IWebDriver driver) 
+        public void DeleteTimeMaterialRecord(IWebDriver driver)
         {
             //Delete a new Time record in Time and Material module//
             IWebElement deletegotoLastpageButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
@@ -157,16 +149,7 @@ namespace TurnUpFebruary2024_.Pages
 
             IWebElement DeletedRecordCode = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
             IWebElement DeletedRecordDescription = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
-
-            if (DeletedRecordCode.Text == "TimeCodeedited" && DeletedRecordDescription.Text == "TimeDescriptionedited")
-            {
-                Console.WriteLine("New Material/Time record has been Deleted successfully");
-            }
-            else
-            {
-                Console.WriteLine("New Material/Time record has not been Deleted successfully :(:( ");
-
-            }
+            Assert.That((DeletedRecordCode.Text == "TimeCodeedited" && DeletedRecordDescription.Text == "TimeDescriptionedited"), "New Material/Time record has not been Deleted");
 
         }
 
